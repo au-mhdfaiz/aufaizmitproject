@@ -1,0 +1,35 @@
+ !pip install jovian opendatasets --upgrade --quiet
+# Downloading Data from Kaggle
+dataset_url = 'https://www.kaggle.com/kianwee/agricultural-raw-material-prices-19902020?select=agricultural_raw_material.csv'
+# Downloading Data from Kaggle
+dataset_url = 'https://www.kaggle.com/kianwee/agricultural-raw-material-prices-19902020?select=agricultural_raw_material.csv'
+Your Kaggle username: danala26
+Your Kaggle Key: ··········
+ # importing csv file
+ data_dir = './agricultural-raw-material-prices-19902020'
+import os
+os.listdir(data_dir)
+project_name = "analysis-agriculture_raw_material_prices_19902020"
+jovian.commit(project=project_name)
+import pandas as pd
+import numpy as np 
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.impute import SimpleImputer
+sns.set(rc={'figure.figsize':(11,4)})
+#reading the csv data
+agri_price_df = pd.read_csv('./agricultural-raw-material-prices-19902020/agricultural_raw_material.csv') 
+# colums list
+agri_price_df.info()
+# It is advisable to make a copy of your dataset, so that we can return to the original data in case we made some worng computation in our data.
+agri_price_df_copy = agri_price_df.copy()
+# Replacing %, "," and "-"
+agri_price_df = agri_price_df.replace('%', '', regex=True)
+agri_price_df = agri_price_df.replace(',', '', regex=True)
+agri_price_df = agri_price_df.replace('-', '', regex=True)
+agri_price_df = agri_price_df.replace('', np.nan)
+agri_price_df = agri_price_df.replace('MAY90', np.nan)
+#dropping rows with NaN values
+agri_price_df = agri_price_df.dropna()
+# check to see if all NaN values are reesolved
+agri_price_df.isnull().sum()
